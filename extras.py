@@ -1,7 +1,7 @@
 
 
 
-from typing import Union
+from typing import Any,Union
 
 
 
@@ -13,9 +13,9 @@ def format_flag(flag:str,identifier_char:str,infinity_identfier:bool)->str:
            return flag[index+1::]
         if char != identifier_char:
             return flag[index::]
-    
+    return flag
 
-def is_a_flag(possible_flag:Union[str,int],identifier_char:str) ->bool:
+def is_a_flag(possible_flag:str,identifier_char:str) ->bool:
 
     if possible_flag.__class__ == int:
          return False 
@@ -27,10 +27,10 @@ def is_a_flag(possible_flag:Union[str,int],identifier_char:str) ->bool:
 
 def get_flags(args:list,flag_identifier:str,infinity_identfier:bool)->dict:
     
-    flags = {'default':[]}
+    flags:dict = {'default':[]}
     current_flag = 'default'
     for arg in args:
-        if is_a_flag(possible_flag=arg,identifier_char=flag_identifier):
+        if is_a_flag(possible_flag=str(arg),identifier_char=flag_identifier):
 
             current_flag = format_flag(
                 flag=arg,
@@ -69,23 +69,19 @@ def format_args(args:list,consider_first:bool,case_sensitive=bool,convert_number
      return args 
 
 
-def get_size(o:object):
+def cast_list(*elements)->list:
+
+    if  len(elements) == 1:
+        if elements[0] is None:
+            return []
+            
+        if elements[0].__class__ == list:
+            return elements[0]
+
+        return [elements[0]]
+    else:
+        return list(elements)
     
-    object_class = o.__class__
-    if object_class == int:
-        return o 
-
-    if object_class in [list,tuple]:
-        return len(o)
-    
-
-
-
-
-
-
-
-
 
 
               
