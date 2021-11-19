@@ -12,11 +12,12 @@ class Args:
                 case_sensitive=False,
                 convert_numbers=True,
                 flag_identifier = '-',
-                infinity_indentifier = True 
+                infinity_indentifier = True,
+                args=deepcopy(argv)                
                 ) -> None:
 
         self._args = format_args(
-            args=deepcopy(argv),
+            args=args,
             consider_first=consider_first,
             case_sensitive=case_sensitive,
             convert_numbers=convert_numbers
@@ -115,8 +116,3 @@ class Args:
         return dumps(self._flags,indent=4)
 
 
-x  = Args()
-
-r = x.flags("a","b","d")
-
-print(r)
