@@ -16,7 +16,7 @@ class Args:
                 infinity_indentifier = True,
                 args=deepcopy(argv)                
                 ) -> None:
-
+        
         self._args = format_args(
             args=args,
             consider_first=consider_first,
