@@ -46,6 +46,7 @@ class Dicts(TestCase):
         expected = {'default':['b','c','d'],'a':['a1','a2']}
 
         self.assertTrue(args==expected)
+        #modifynd dict with a ky 
         expected['d'] = None
         self.assertTrue(args!=expected)
         self.assertFalse(args==expected)
