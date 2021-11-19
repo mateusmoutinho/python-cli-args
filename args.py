@@ -9,7 +9,8 @@ from extras import format_args, get_flags,cast_list
 class Args:
 
     def __init__(self,consider_first=False,
-                case_sensitive=False,
+                flags_case_sensitive=False,
+                args_case_sensitive=True,
                 convert_numbers=True,
                 flag_identifier = '-',
                 infinity_indentifier = True,
@@ -19,17 +20,18 @@ class Args:
         self._args = format_args(
             args=args,
             consider_first=consider_first,
-            case_sensitive=case_sensitive,
+            case_sensitive=args_case_sensitive,
             convert_numbers=convert_numbers
         )
 
         self._flags = get_flags(
             args=self._args,
             flag_identifier=flag_identifier,
+            case_sensitive=flags_case_sensitive,
             infinity_identfier=infinity_indentifier
         )
-        self.keys = list(self._flags.keys())
-        self.size = len(self._args)
+        self._keys = list(self._flags.keys())
+        self._size = len(self._args)
 
     
     def args(self,*flags)->list:
@@ -43,20 +45,22 @@ class Args:
             filtered_args+=flag_content
         return filtered_args
 
-
+    
     def flags(self,*flags)->dict:
         flags_list = cast_list(*flags)
         if flags_list == []:
-            return self.flags
+            return self._flags
         filtered_flags = {}
         for flag in flags_list:
             formated_flag = str(flag)
             filtered_flags[formated_flag] =  self[formated_flag]
         return filtered_flags
-                
+    
+    def flags_names(self):
+        return self._keys
     
     def __len__(self)->int:
-        return self.size
+        return self._size
 
 
     def __getitem__(self, index:Union[int,slice,str])->Union[list,str,int,None]:
@@ -73,7 +77,7 @@ class Args:
        
 
     def __contains__(self,arg: Union[str,int]):
-        if arg in self._args or arg in self.keys:
+        if arg in self._args or arg in self._keys:
             return True 
         return False 
         
@@ -97,19 +101,19 @@ class Args:
     
 
     def __gt__(self,number: int)-> bool:
-        return self.size > number
+        return self._size > number
     
         
     def __ge__(self,number: int)-> bool:
-        return  self.size  >= number
+        return  self._size  >= number
     
 
     def __le__(self,number: int)-> bool:
-        return   self.size  <= number
+        return   self._size  <= number
 
 
     def __lt__(self,number: int)-> bool:
-        return self.size < number
+        return self._size < number
 
  
     def __repr__(self) -> str:

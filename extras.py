@@ -2,39 +2,49 @@
 
 
 from typing import Any,Union
+from unittest import case
 
 
 
 
-def format_flag(flag:str,identifier_char:str,infinity_identfier:bool)->str:
+def format_flag(flag:str,case_sensitive:bool,identifier_char:str,infinity_identfier:bool)->str:
+    if not case_sensitive:
+        flag = flag.lower()
     for index in range(0,len(flag)):
         char = flag[index]
         if char == identifier_char and not infinity_identfier:
            return flag[index+1::]
         if char != identifier_char:
             return flag[index::]
+    
     return flag
 
-def is_a_flag(possible_flag:Union[str,int],identifier_char:str) ->bool:
+def is_a_flag(possible_flag:Union[str,int], identifier_char:str) ->bool:
 
     if possible_flag.__class__ == int:
          return False 
-
+    
     if possible_flag[0] == identifier_char and len(possible_flag) > 1:
         return True 
     return False 
 
 
-def get_flags(args:list,flag_identifier:str,infinity_identfier:bool)->dict:
+def get_flags(
+    args:list,
+    flag_identifier:str,
+    case_sensitive:bool,
+    infinity_identfier:bool)->dict:
     
     flags:dict = {'default':[]}
     current_flag = 'default'
     for arg in args:
-
-        if is_a_flag(possible_flag=arg,identifier_char=flag_identifier):
+        possible_flag = str(arg).lower() if not case_sensitive else arg
+        
+        if is_a_flag(possible_flag=possible_flag,identifier_char=flag_identifier):
 
             current_flag = format_flag(
                 flag=arg,
+                case_sensitive = case_sensitive,
                 identifier_char=flag_identifier,
                 infinity_identfier=infinity_identfier
                 )
