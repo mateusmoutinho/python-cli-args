@@ -15,7 +15,7 @@ def format_flag(flag:str,identifier_char:str,infinity_identfier:bool)->str:
             return flag[index::]
     return flag
 
-def is_a_flag(possible_flag:str,identifier_char:str) ->bool:
+def is_a_flag(possible_flag:Union[str,int],identifier_char:str) ->bool:
 
     if possible_flag.__class__ == int:
          return False 
@@ -30,14 +30,16 @@ def get_flags(args:list,flag_identifier:str,infinity_identfier:bool)->dict:
     flags:dict = {'default':[]}
     current_flag = 'default'
     for arg in args:
-        if is_a_flag(possible_flag=str(arg),identifier_char=flag_identifier):
+
+        if is_a_flag(possible_flag=arg,identifier_char=flag_identifier):
 
             current_flag = format_flag(
                 flag=arg,
                 identifier_char=flag_identifier,
                 infinity_identfier=infinity_identfier
                 )
-            flags[current_flag] = []
+            if current_flag not in flags.keys():
+                flags[current_flag] = []
             continue 
         
         flags[current_flag].append(arg)

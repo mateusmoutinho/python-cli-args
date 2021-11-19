@@ -38,6 +38,7 @@ class Args:
         filtered_args = []
         if flags_list == []:
             return self._args
+
         for flag in flags_list:
             flag_content = cast_list(self[flag])
             filtered_args+=flag_content
@@ -49,13 +50,9 @@ class Args:
         if flags_list == []:
             return self.flags
         filtered_flags = {}
-     
         for flag in flags_list:
             formated_flag = str(flag)
-            
-            values = self[formated_flag]
-            if values is not None:
-                filtered_flags[formated_flag] = values
+            filtered_flags[formated_flag] =  self[formated_flag]
         return filtered_flags
                 
     
@@ -122,7 +119,6 @@ class Args:
 
 x  = Args()
 
-r = x.args(1,2,'b')
+r = x.flags("a","b","d")
 
-y = x.flags('a','b',2)
-print(y)
+print(r)
