@@ -41,6 +41,9 @@ class Args:
             return self._args
 
         for flag in flags_list:
+            if flag.__class__ != str:
+                raise TypeError('only str are valid for flags')
+                
             flag_content = cast_list(self[flag])
             filtered_args+=flag_content
         return filtered_args
@@ -132,9 +135,6 @@ class Args:
         return dumps(self._flags,indent=4)
 
 
-args = Args()
-
-print(args)
 
 
 
