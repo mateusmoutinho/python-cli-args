@@ -1,7 +1,7 @@
 from args import Args
 from unittest import TestCase
 
-class Construction(TestCase):
+class Test_Construction(TestCase):
 
     def test_all_true(self):
         args = Args(

@@ -1,7 +1,7 @@
 from args import Args
 from unittest import TestCase
 
-class Numbers(TestCase):
+class Test_Numbers(TestCase):
 
     def test_true(self):
         args = Args(args=['a','b'],consider_first=True)
@@ -19,7 +19,7 @@ class Numbers(TestCase):
         self.assertFalse(args>10)
 
 
-class Lists(TestCase):
+class Test_Lists(TestCase):
 
 
     def test_lists(self):
@@ -29,7 +29,7 @@ class Lists(TestCase):
         self.assertFalse(args==['b','d','d'])
 
 
-class Tuples(TestCase):
+class Test_Tuples(TestCase):
 
 
     def test_lists(self):
@@ -38,7 +38,7 @@ class Tuples(TestCase):
         self.assertTrue(args!=('b','d','d'))
         self.assertFalse(args==('b','d','d'))
 
-class Dicts(TestCase):
+class Test_Dicts(TestCase):
 
 
     def test_lists(self):

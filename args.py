@@ -74,7 +74,7 @@ class Args:
             if index_type == str:
                 return self._flags[index]
 
-        except KeyError or IndexError: 
+        except: 
                 return None
 
         if index_type not in [slice,int,str]:
@@ -127,11 +127,14 @@ class Args:
     def __lt__(self,number: int)-> bool:
         return self._size < number
 
- 
+  
     def __repr__(self) -> str:
         return dumps(self._flags,indent=4)
 
 
+args = Args()
+
+print(args)
 
 
 

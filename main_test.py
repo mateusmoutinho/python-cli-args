@@ -1,8 +1,9 @@
 
 from tests.construction import * 
 from tests.comparations import *
-from tests.get_item import *
+#tests gettitens, len and flags names
+from tests.extras import *
 from tests.flags import *
-import unittest
+from unittest import main
 
-unittest.main()
+main()

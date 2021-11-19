@@ -1,7 +1,7 @@
 from args import Args
 from unittest import TestCase
 
-class Flags(TestCase):
+class Test_Flags(TestCase):
 
     def test_all(self):
         args = Args(args=['a','b','-a','a1','a2'])
