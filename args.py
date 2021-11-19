@@ -52,8 +52,10 @@ class Args:
             return self._flags
         filtered_flags = {}
         for flag in flags_list:
-            formated_flag = str(flag)
-            filtered_flags[formated_flag] =  self[formated_flag]
+            if flag.__class__ != str:
+                raise TypeError('only str are valid for flags')
+
+            filtered_flags[flag] =  self[flag]
         return filtered_flags
     
     def flags_names(self):
@@ -64,35 +66,45 @@ class Args:
 
 
     def __getitem__(self, index:Union[int,slice,str])->Union[list,str,int,None]:
+        index_type = index.__class__
         try:
-            index_type = index.__class__
             if index_type in [slice,int]:
                 return self._args[index]
             
             if index_type == str:
                 return self._flags[index]
-           
-        except KeyError or IndexError:pass 
-        return None 
-       
+
+        except KeyError or IndexError: 
+                return None
+
+        if index_type not in [slice,int,str]:
+            raise TypeError('only int,slices and str are valid')
+
 
     def __contains__(self,arg: Union[str,int]):
-        if arg in self._args or arg in self._keys:
-            return True 
-        return False 
-        
+        return arg in self._args 
+
 
     def __eq__(self, o: object) -> bool:
+        
+        
         if o == {} or o == []:
             return True if self._flags == {'default':[]} else False
         
         comparation_type = o.__class__
-    
+         
+        if comparation_type == int:
+            return o == self._size
+         
+        if comparation_type == tuple:
+            return list(o) == self._args
+            
         if comparation_type == list:
             return o == self._args
         
         if comparation_type == dict:
             return o == self._flags
+        
         return False 
 
         
@@ -118,5 +130,6 @@ class Args:
  
     def __repr__(self) -> str:
         return dumps(self._flags,indent=4)
+
 
 

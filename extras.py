@@ -19,11 +19,14 @@ def format_flag(flag:str,case_sensitive:bool,identifier_char:str,infinity_identf
     
     return flag
 
-def is_a_flag(possible_flag:Union[str,int], identifier_char:str) ->bool:
+def is_a_flag(possible_flag:Union[str,int,float],case_sensitive:bool,identifier_char:str) ->bool:
 
-    if possible_flag.__class__ == int:
+    if possible_flag.__class__ in [int,float]:
          return False 
     
+    if not case_sensitive:
+        possible_flag = possible_flag.lower()
+
     if possible_flag[0] == identifier_char and len(possible_flag) > 1:
         return True 
     return False 
@@ -38,9 +41,8 @@ def get_flags(
     flags:dict = {'default':[]}
     current_flag = 'default'
     for arg in args:
-        possible_flag = str(arg).lower() if not case_sensitive else arg
-        
-        if is_a_flag(possible_flag=possible_flag,identifier_char=flag_identifier):
+   
+        if is_a_flag(possible_flag=arg,case_sensitive=case_sensitive,identifier_char=flag_identifier):
 
             current_flag = format_flag(
                 flag=arg,
@@ -87,7 +89,7 @@ def cast_list(*elements)->list:
         if elements[0] is None:
             return []
             
-        if elements[0].__class__ == list:
+        if elements[0].__class__ in [list,tuple]:
             return elements[0]
 
         return [elements[0]]
