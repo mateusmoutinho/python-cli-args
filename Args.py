@@ -3,9 +3,7 @@ from sys import argv
 from copy import deepcopy
 from json import dumps
 from typing import Union
-
-
-from extras import format_args, format_flag, get_flags,cast_list
+from extras import format_args, get_flags,cast_list
 
 
 class Args:
