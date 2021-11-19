@@ -60,40 +60,68 @@ def get_flags(
 
 
 def convert_number(possible_number:str)->Union[str,float,int]:
+    '''convert the possible_number  in a number if its possible,
+    case if were not possible to convert, will return the possible_number 
+    (the same arg of function)
+    '''
+
     try:
+        #try to cast in an int 
         return int(possible_number)
     except ValueError:
         try: 
+            #case cat a Value error, try to cast in a float
             return float(possible_number)
         except ValueError:
+            #case if were not a int either a float, will cat here 
+            #and return the same arg
             return possible_number 
 
 
 
 def format_args(args:list,consider_first:bool,case_sensitive=bool,convert_numbers=bool):
-     
-     if not consider_first:
+    '''this function format args, based on args passed
+    args: the list of "argv"
+    consider_first: if the first element of args is to be considered
+    case_sensitive: case if not, all will be lower
+    convert_numbers: convert numbers in float or int if possible
+    '''
+    if not consider_first:
+        #split the args
         args = args[1::]
 
-     if not case_sensitive:
+    if not case_sensitive:
+        #map the args to all be lower
         args = list(map(lambda arg: arg.lower(),args))
     
-     if convert_numbers:
+    if convert_numbers:
+        #make a maping calling the convert number funcion
         args = list(map(convert_number,args))
-     return args 
+    return args 
 
 
 def cast_list(*elements)->list:
-
+    '''elements: [tuple,list,str]
+    this function cast everthing in a list, but every object, has 
+    his especific way, ex:
+    cast_list("a","b") returns: ["a","b"]
+    cast_list([1,2]) returns: [1,2]
+    '''
+    #means just one element were passed as arg
     if  len(elements) == 1:
+        #means nothing were passed as arg
         if elements[0] is None:
             return []
-            
+        
         if elements[0].__class__ in [list,tuple]:
-            return elements[0]
-
+            #if a tuple or list were passed, it will return a cast of it
+            return list(elements[0])
+            
+        #else will make a list with elements 0 
         return [elements[0]]
     else:
+
+        #if its a larger element, just cast with list
         return list(elements)
     
 

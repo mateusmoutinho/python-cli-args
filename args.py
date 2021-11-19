@@ -7,7 +7,7 @@ from extras import format_args, get_flags,cast_list
 
 
 class Args:
-
+   
     def __init__(self,consider_first=False,
                 flags_case_sensitive=False,
                 args_case_sensitive=True,
@@ -35,6 +35,7 @@ class Args:
 
     
     def args(self,*flags)->list:
+        
         flags_list = cast_list(*flags)
         filtered_args = []
         if flags_list == []:
@@ -50,20 +51,44 @@ class Args:
 
     
     def flags(self,*flags)->dict:
+        '''this funcion returns a dict,containing the flags passed by arguments,
+        if nothing were passed,it will return the full dict flags\n
+        flags: a list of the flags will want to filter\n
+        exemple:\n
+        argv: "teste" -a  "testa"  -b  "testeb"\n 
+        code: args.flags("a","x")\n
+        returns: {"a":["teste"],"x":None}
+        '''
+        #generated a standardized of flags_list
         flags_list = cast_list(*flags)
         if flags_list == []:
             return self._flags
+
+
         filtered_flags = {}
+     
         for flag in flags_list:
             if flag.__class__ != str:
                 raise TypeError('only str are valid for flags')
+            
+            try:
+                 #try to refs the flag, with the _flags object
+                 filtered_flags[flag] =  self._flags[flag]
+            except KeyError:
+                #case if doesnt find, it refs the key to None
+                filtered_flags[flag] = None 
 
-            filtered_flags[flag] =  self[flag]
         return filtered_flags
     
-    def flags_names(self):
+
+    def flags_names(self)->list:
+        '''returns the list of flags that were typed by the user ex:\n
+        argv: "teste" -a  "testa"  -b  "testeb"\n 
+        returns: ["default","a","b"]'''
+        #returns the "private" atributes _keys
         return self._keys
     
+
     def __len__(self)->int:
         return self._size
 
@@ -135,6 +160,8 @@ class Args:
         return dumps(self._flags,indent=4)
 
 
+args  = Args()
 
-
+args.flags_names()
+args.flags()
 
