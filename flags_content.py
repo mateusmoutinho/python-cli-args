@@ -16,7 +16,8 @@ class FlagsContent(ListArgs):
             self.exist = True 
             if content != []:
                 self.filled = True  
-            self._args = content
+            self.args = content
     
     
+
 
