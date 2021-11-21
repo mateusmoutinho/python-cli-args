@@ -12,7 +12,7 @@ def format_flag(
     case_sensitive:bool,
     flag_identifier:str,
     infinity_identfier:bool)->str:
-    '''this function is responssible for format a givem flag \n 
+    '''this method is responssible for format a givem flag \n 
     flag: the flag \n
     case_sensitive: if false all will be lower\n
     flag_identifier: the char who identifies the flag ex: -b i=(-)\n
@@ -38,11 +38,11 @@ def is_a_flag(
     possible_flag:Union[str,int,float],
     case_sensitive:bool,
     flag_identifier:str) ->bool:
-    '''this function is used to recognize flags\n
+    '''this method is used to recognize flags\n
     case_sensitive: if not wil compare in lower_case \n
     flag_identifier: the identifier tha tels if its a flag\n'''
     
-    #this is for when the function is called
+    #this is for when the method is called
     #with numbers args 
     if possible_flag.__class__ in [int,float]:
          return False 
@@ -65,7 +65,7 @@ def get_flags(
     flag_identifier:str,
     case_sensitive:bool,
     infinity_identfier:bool)->dict:
-    '''this function returns a dict, with all flags passed in args \n
+    '''this method returns a dict, with all flags passed in args \n
     args: the list of args \n
     case_sensitive: if is False, the flags will be lower_case 
     flag_identifier: the char that identifiers what is a flag, ex:"-"\n
@@ -101,7 +101,7 @@ def get_flags(
 def convert_number(possible_number:str)->Union[str,float,int]:
     '''convert the possible_number  in a number if its possible,
     case if were not possible to convert, will return the possible_number 
-    (the same arg of function)'''
+    (the same arg of method)'''
 
     try:
         #try to cast in an int 
@@ -118,7 +118,7 @@ def convert_number(possible_number:str)->Union[str,float,int]:
 
 
 def format_args(args:list,consider_first:bool,case_sensitive=bool,convert_numbers=bool):
-    '''this function format args, based on args passed
+    '''this method format args, based on args passed
     args: the list of "argv"
     consider_first: if the first element of args is to be considered
     case_sensitive: if False, all will be lower
@@ -138,7 +138,7 @@ def format_args(args:list,consider_first:bool,case_sensitive=bool,convert_number
 
 
 def cast_list(*elements)->list:
-    '''this function transfor everthing in a list, ex:\n
+    '''this method transfor everthing in a list, ex:\n
     cast_list("a","b") returns: ["a","b"]\n
     cast_list([1,2]) returns: [1,2]\n'''
     #when * is ised all the arguments will be passed as tuple 
