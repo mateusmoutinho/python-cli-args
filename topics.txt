@@ -1,0 +1,11 @@
+
+#basic usage 
+
+Args
+-instanciar a classe args 
+-percorrer o arg 
+-verificar se argumento existe
+-comparar tamanho 
+
+Flags 
+-capturar flags 

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from flags_content import FlagsContent
+from cli_args.flags_content import FlagsContent
 
 
 class TestFlagsContent(TestCase):
@@ -13,7 +13,7 @@ class TestFlagsContent(TestCase):
         self.assertFalse(flag.exist)
 
     def test_filled(self):
-        flag = FlagsContent(content=['a',1])
+        flag = FlagsContent(content=['a', 1])
         self.assertTrue(flag.filled)
 
     def test_not_filled(self):
