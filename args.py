@@ -4,9 +4,11 @@ from copy import deepcopy
 from json import dumps
 from typing import Union
 from extras import format_args, get_flags,cast_list
+from flags_content import FlagsContent
+from list_args import ListArgs
 
 
-class Args:
+class Args(ListArgs):
    
     def __init__(self,consider_first=False,
                 flags_case_sensitive=False,
@@ -30,17 +32,13 @@ class Args:
             case_sensitive=flags_case_sensitive,
             infinity_identfier=infinity_indentifier
         )
-        self._keys = list(self._flags.keys())
-        self._size = len(self._args)
+        self.flags_names = list(self._flags.keys())
 
-    
-    def flags_content(self,*flags)->Union[list,None]:
+
+
+    def flags_content(self,*flags)->FlagsContent:
         flags_list = cast_list(*flags)
         filtered_args = []
- 
-        if flags_list == []:
-            return self._args
-
         at_least_one_flag_exist = False
         for flag in flags_list:
             if flag.__class__ != str:
@@ -50,80 +48,21 @@ class Args:
                 at_least_one_flag_exist = True 
             except KeyError:pass 
 
-        return filtered_args if at_least_one_flag_exist else None
-
-
-    def uslesss(self,*flags)->dict:
-        '''this funcion returns a dict,containing the flags passed by arguments,
-        if nothing were passed,it will return the full dict flags\n
-        flags: a list of the flags will want to filter\n
-        exemple:\n
-        argv: "teste" -a  "testa"  -b  "testeb"\n 
-        code: args.flags("a","x")\n
-        returns: {"a":["teste"],"x":None}
-        '''
-        #generated a standardized of flags_list
-        flags_list = cast_list(*flags)
-        if flags_list == []:
-            return self._flags
-
-
-        filtered_flags = {}
-     
-        for flag in flags_list:
-            if flag.__class__ != str:
-                raise TypeError('only str are valid for flags')
-            
-            try:
-                 #try to refs the flag, with the _flags object
-                 filtered_flags[flag] =  self._flags[flag]
-            except KeyError: pass 
-
-        return filtered_flags
-    
-
-    def flags_names(self)->list:
-        '''returns the list of flags that were typed by the user ex:\n
-        argv: "teste" -a  "testa"  -b  "testeb"\n 
-        returns: ["default","a","b"]'''
-        #returns the "private" atributes _keys
-        return self._keys
-    
-
-    def __len__(self)->int:
-        return self._size
-
-
-    def __getitem__(self, index:Union[int,slice,str])->Union[list,str,int,None]:
-        index_type = index.__class__
-        try:
-            if index_type in [slice,int]:
-                return self._args[index]
-            
-            if index_type == str:
-                return self._flags[index]
-
-        except: 
-                return None
-
-        if index_type not in [slice,int,str]:
-            raise TypeError('only int,slices and str are valid')
-
-
-    def __contains__(self,arg: Union[str,int]):
-        return arg in self._args 
+        if at_least_one_flag_exist:
+            return FlagsContent(content=filtered_args)
+        else:
+            return FlagsContent(content=None)
 
 
     def __eq__(self, o: object) -> bool:
         
-        
         if o == {} or o == []:
-            return True if self._flags == {'default':[]} else False
+            return True if self._args == [] else False
         
         comparation_type = o.__class__
          
         if comparation_type == int:
-            return o == self._size
+            return o == len(self)
          
         if comparation_type == tuple:
             return list(o) == self._args
@@ -136,33 +75,12 @@ class Args:
         
         return False 
 
-        
+       
     def __ne__(self,o: object)-> bool:
         return True if self.__eq__(o) == False else True
     
-
-    def __gt__(self,number: int)-> bool:
-        return self._size > number
-    
-        
-    def __ge__(self,number: int)-> bool:
-        return  self._size  >= number
-    
-
-    def __le__(self,number: int)-> bool:
-        return   self._size  <= number
-
-
-    def __lt__(self,number: int)-> bool:
-        return self._size < number
-
   
     def __repr__(self) -> str:
         return dumps(self._flags,indent=4)
 
-
-args  = Args()
-
-args.flags_names()
-args.flags()
 

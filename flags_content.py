@@ -2,8 +2,10 @@
 
 from typing import Union
 
+from list_args import ListArgs
 
-class FlagsContent(list):
+
+class FlagsContent(ListArgs):
 
     def __init__(self,content:Union[None,list]) -> None:
         
@@ -14,7 +16,7 @@ class FlagsContent(list):
             self.exist = True 
             if content != []:
                 self.filled = True  
-            self+=content
+            self._args = content
     
     
 
