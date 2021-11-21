@@ -34,23 +34,26 @@ class Args:
         self._size = len(self._args)
 
     
-    def args(self,*flags)->list:
-        
+    def flags_content(self,*flags)->Union[list,None]:
         flags_list = cast_list(*flags)
         filtered_args = []
+ 
         if flags_list == []:
             return self._args
 
+        at_least_one_flag_exist = False
         for flag in flags_list:
             if flag.__class__ != str:
                 raise TypeError('only str are valid for flags')
-                
-            flag_content = cast_list(self[flag])
-            filtered_args+=flag_content
-        return filtered_args
+            try:
+                filtered_args+=self._flags[flag]
+                at_least_one_flag_exist = True 
+            except KeyError:pass 
 
-    
-    def flags(self,*flags)->dict:
+        return filtered_args if at_least_one_flag_exist else None
+
+
+    def uslesss(self,*flags)->dict:
         '''this funcion returns a dict,containing the flags passed by arguments,
         if nothing were passed,it will return the full dict flags\n
         flags: a list of the flags will want to filter\n
@@ -74,9 +77,7 @@ class Args:
             try:
                  #try to refs the flag, with the _flags object
                  filtered_flags[flag] =  self._flags[flag]
-            except KeyError:
-                #case if doesnt find, it refs the key to None
-                filtered_flags[flag] = None 
+            except KeyError: pass 
 
         return filtered_flags
     
