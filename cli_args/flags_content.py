@@ -2,7 +2,7 @@
 
 from typing import Union
 
-from list_args import ListArgs
+from cli_args.list_args import ListArgs
 
 #The Flags Content Extends ListArgs, witch is a "only-read" list
 class FlagsContent(ListArgs):

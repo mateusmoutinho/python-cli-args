@@ -2,10 +2,10 @@
 from sys import argv
 from copy import deepcopy
 from json import dumps
-from typing import Union
-from extras import format_args, get_flags,cast_list
-from flags_content import FlagsContent
-from list_args import ListArgs
+
+from cli_args.extras import format_args, get_flags,cast_list
+from cli_args.flags_content import FlagsContent
+from cli_args.list_args import ListArgs
 
 
 class Args(ListArgs):
