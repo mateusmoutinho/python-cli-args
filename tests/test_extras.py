@@ -6,7 +6,7 @@ class Format_Flag(TestCase):
      def test_infinity_identifier(self):
          formated_flag = format_flag(flag='--a',
          case_sensitive=False,
-         identifier_char='-',
+         flag_identifier='-',
          infinity_identfier=True
          )
          self.assertEqual(formated_flag,'a')
@@ -14,7 +14,7 @@ class Format_Flag(TestCase):
      def test_not_inifynity_identifier(self):
          formated_flag = format_flag(flag='---a',
          case_sensitive=False,
-         identifier_char='-',
+         flag_identifier='-',
          infinity_identfier=False
          )
          self.assertEqual(formated_flag,'--a')
@@ -22,7 +22,7 @@ class Format_Flag(TestCase):
      def test_case_sensitive(self):
          formated_flag = format_flag(flag='--A',
          case_sensitive=True,
-         identifier_char='-',
+         flag_identifier='-',
          infinity_identfier=True
          )
          self.assertEqual(formated_flag,'A')
@@ -31,22 +31,26 @@ class Format_Flag(TestCase):
 class Is_a_Flag(TestCase):
     
     def test_is_a_flag(self):
-        flag = is_a_flag('--a',case_sensitive=False,identifier_char='-')
+        flag = is_a_flag('--a',case_sensitive=False,flag_identifier='-')
         self.assertTrue(flag)
 
+    def test_single_char(self):
+        flag = is_a_flag('-',case_sensitive=False,flag_identifier='-')
+        self.assertFalse(flag)
+
     def test_case_sensitive(self):
-        flag = is_a_flag('BA',case_sensitive=True,identifier_char='b')
+        flag = is_a_flag('BA',case_sensitive=True,flag_identifier='b')
         self.assertFalse(flag)
 
 
     def test_case_sensitive(self):
-        flag = is_a_flag('BA',case_sensitive=True,identifier_char='B')
+        flag = is_a_flag('BA',case_sensitive=True,flag_identifier='B')
         self.assertTrue(flag)
 
 
 
     def test_is_not_a_flag(self):
-        flag = is_a_flag('--a',case_sensitive=False,identifier_char='#')
+        flag = is_a_flag('--a',case_sensitive=False,flag_identifier='#')
         self.assertFalse(flag)
 
 
