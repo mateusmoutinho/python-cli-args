@@ -17,26 +17,16 @@ class Get_Item(TestCase):
         self.assertEqual(['b','-a'],args[0:2])
 
 
-    def test_flags(self):
-        args = Args(args=['a','b','-a','a1','a2','--c','c1','c2'])
-        self.assertEqual(['a1','a2'],args['a'])
-
-
-    def test_None_flags(self):
-        args = Args(args=['a','b','-a','a1','a2','--c','c1','c2'])
-        self.assertEqual(None,args['x'])
-
-
     def test_None_numbers(self):
         args = Args(args=['a','b','-a','a1','a2','--c','c1','c2'])
-        self.assertEqual(None,args[25])
+        self.assertRaises(IndexError,lambda:args[20])
 
 
 class Test_Flags_Names(TestCase):
 
     def test_flags_name(self):
         args = Args(args=['a','b','-a','a1','a2','--c','c1','c2'])
-        self.assertEqual(args.flags_names(),['default','a','c'])
+        self.assertEqual(args.flags_names,['default','a','c'])
 
 
 class Test_Len(TestCase):

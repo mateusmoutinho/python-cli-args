@@ -18,12 +18,12 @@ class Test_Construction(TestCase):
             'A':[1,2,3],
             'B':['b1','B2','b3']
         }
-        self.assertDictEqual(args._flags,dict_espected)
+        self.assertDictEqual(args.flags,dict_espected)
         list_espected = ['A','B','c','-A',1,2,3,'--B','b1','B2','b3']
         #testing args 
-        self.assertListEqual(args._args,list_espected)  
+        self.assertListEqual(args.args,list_espected)  
         #testing keys
-        self.assertListEqual(args._keys,['default','A','B'])
+        self.assertListEqual(args.flags_names,['default','A','B'])
 
 
     def test_all_false(self):
@@ -41,12 +41,12 @@ class Test_Construction(TestCase):
             'a':['1','2','3'],
             '##b':['b1','b2','b3']
         }
-        self.assertDictEqual(args._flags,dict_espected)
+        self.assertDictEqual(args.flags,dict_espected)
         list_espected = ['b','c','#a','1','2','3','###b','b1','b2','b3']
         #testing args
-        self.assertListEqual(args._args,list_espected)  
+        self.assertListEqual(args.args,list_espected)  
         #testing keys
-        self.assertListEqual(args._keys,['default','a','##b'])
+        self.assertListEqual(args.flags_names,['default','a','##b'])
     
 
     def test_default(self):
@@ -56,16 +56,16 @@ class Test_Construction(TestCase):
             'a':[1,2.3,3],
             'b':['b1','B2','b3']
         }
-        self.assertDictEqual(args._flags,dict_espected)
+        self.assertDictEqual(args.flags,dict_espected)
         list_espected = ['B','c','-A',1,2.3,3,'--B','b1','B2','b3']
-        self.assertListEqual(args._args,list_espected)  
-        self.assertListEqual(args._keys,['default','a','b'])
+        self.assertListEqual(args.args,list_espected)  
+        self.assertListEqual(args.flags_names,['default','a','b'])
     
 
     def test_size(self):
         args = Args(args=['A','B'],consider_first=True)
-        self.assertEqual(args._size,2)
+        self.assertEqual(len(args),2)
         args = Args(args=['A','B'],consider_first=False)
-        self.assertEqual(args._size,1)
+        self.assertEqual(len(args),1)
 
 
