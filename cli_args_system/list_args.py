@@ -9,8 +9,8 @@ class ListArgs:
 
     def __init__(self) -> None:
         # creates the empty args
-        self.args = []
-
+        self._args = []
+    
     def __eq__(self, o: object) -> bool:
         """this method is called when == is called
         o: the object comparison, ex args == 20, 20 its "o"
@@ -20,10 +20,10 @@ class ListArgs:
             return len(self) == o
         # if its a list it will be compared with the args property
         if isinstance(o, list):
-            return o == self.args
+            return o == self._args
 
         if isinstance(o, tuple):
-            return list(o) == self.args
+            return list(o) == self._args
 
         return False
 
@@ -35,16 +35,16 @@ class ListArgs:
     def __getitem__(self, index: Union[slice, int]):
         """this method its called when != is used """
         # its just return the index element
-        return self.args[index]
+        return self._args[index]
 
     def __contains__(self, o: object):
         """this method is called when "in" is used"""
         # its just return the in comparison with args
-        return o in self.args
+        return o in self._args
 
     def __len__(self):
         """this method is called when len(x) is called"""
-        return len(self.args)
+        return len(self._args)
 
     # all above methods is for >, >=, <. <= methods
     # and all make the comparison with the self len

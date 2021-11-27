@@ -25,21 +25,33 @@ class Args(ListArgs):
         super().__init__()
         if args is None:
             args = deepcopy(argv)
-        self.args = format_args(
+        self._args = format_args(
             args=args,
             consider_first=consider_first,
             case_sensitive=args_case_sensitive,
             convert_numbers=convert_numbers
         )
 
-        self.flags = get_flags(
-            args=self.args,
+        self._flags = get_flags(
+            args=self._args,
             flag_identifier=flag_identifier,
             case_sensitive=flags_case_sensitive,
             infinity_identifier=infinity_identifier
         )
-        self.flags_names = list(self.flags.keys())
 
+    def args(self) ->list:
+        """returns the arguments passed in argv, 
+        formatted according to the initial arguments of the class"""
+        return self._args
+
+    def flags_names(self) ->list:
+        """returns the name of the flags passed in argv"""
+        return list(self._flags.keys())
+    
+    def flags(self)->dict:
+        """returns a dictionary of flags captured in argv"""
+        return self._flags
+        
     def flags_content(self, *flags) -> FlagsContent:
         """returns a FlagsContent object, witch is a group of
         the found flags in argv\n
@@ -61,7 +73,7 @@ class Args(ListArgs):
                 raise TypeError('only str are valid for flags')
             try:
                 # try to insert into the filtered list
-                filtered_args += self.flags[flag]
+                filtered_args += self._flags[flag]
                 # if pass till here, means this flag were inserted in
                 # the filtered args
                 at_least_one_flag_exist = True
@@ -80,31 +92,31 @@ class Args(ListArgs):
         """this methods is called when == is used"""
 
         # means that is a empty comparison
-        # so it will return True if self.args is empty
+        # so it will return True if self._args is empty
         if o == {} or o == []:
-            return True if self.args == [] else False
+            return True if self._args == [] else False
 
         comparison_type = o.__class__
 
         # if comparison type its a int, it will compare with args size
         if comparison_type == int:
-            return o == len(self.args)
+            return o == len(self._args)
 
         # if is a tuple, it will cast the comparison
         # and compare with args
         if comparison_type == tuple:
-            return list(o) == self.args
+            return list(o) == self._args
 
         # same with list, but don't cast it
         if comparison_type == list:
-            return o == self.args
+            return o == self._args
 
-        # if is a dict, it will compare with the self.flags
+        # if is a dict, it will compare with the self._flags
         if comparison_type == dict:
-            return o == self.flags
+            return o == self._flags
 
         return False
 
     def __repr__(self) -> str:
         """returns a json representation of the flags attribute"""
-        return dumps(self.flags, indent=4)
+        return dumps(self._flags, indent=4)

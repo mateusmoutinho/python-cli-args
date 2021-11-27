@@ -20,4 +20,10 @@ class FlagsContent(ListArgs):
                 self.filled = True
                 # set the args to content, for to be
             # used with the super(ListArgs)
-            self.args = content
+            self._args = content
+
+    def __repr__(self) -> str:
+        return f'exist:  {self.exist}\n'\
+               f'filled: {self.filled}\n'\
+               f'args:   {self._args}' 
+                

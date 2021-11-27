@@ -20,14 +20,14 @@ class TestArgsFlagsContent(TestCase):
         flag = args.flags_content('b')
         self.assertTrue(flag.exist)
         self.assertTrue(flag.filled)
-        self.assertListEqual(flag.args, ['b1', 'b2'])
+        self.assertListEqual(flag._args, ['b1', 'b2'])
 
     def test_synonym(self):
         args = Args(args=['a', '-out', 'a.txt', 'b.txt'])
         flag = args.flags_content('out', 'out-file', 'o')
-        self.assertListEqual(flag.args, ['a.txt', 'b.txt'])
+        self.assertListEqual(flag._args, ['a.txt', 'b.txt'])
 
     def test_double_synonym(self):
         args = Args(args=['a', '-out', 'a.txt', 'b.txt', '-o', 'c.txt'])
         flag = args.flags_content('out', 'out-file', 'o')
-        self.assertListEqual(flag.args, ['a.txt', 'b.txt', 'c.txt'])
+        self.assertListEqual(flag._args, ['a.txt', 'b.txt', 'c.txt'])

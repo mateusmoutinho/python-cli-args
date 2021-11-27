@@ -19,3 +19,4 @@ class TestFlagsContent(TestCase):
     def test_not_filled(self):
         flag = FlagsContent(content=[])
         self.assertFalse(flag.filled)
+
