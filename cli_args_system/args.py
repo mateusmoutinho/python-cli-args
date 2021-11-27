@@ -31,26 +31,67 @@ class Args(ListArgs):
             case_sensitive=args_case_sensitive,
             convert_numbers=convert_numbers
         )
-
+        
+        
         self._flags = get_flags(
             args=self._args,
             flag_identifier=flag_identifier,
             case_sensitive=flags_case_sensitive,
             infinity_identifier=infinity_identifier
         )
+        self._unused_flags = deepcopy(self._flags)
+
 
     def args(self) ->list:
         """returns the arguments passed in argv, 
         formatted according to the initial arguments of the class"""
-        return self._args
+        return deepcopy(self._args)
 
-    def flags_names(self) ->list:
-        """returns the name of the flags passed in argv"""
-        return list(self._flags.keys())
-    
+
     def flags(self)->dict:
         """returns a dictionary of flags captured in argv"""
-        return self._flags
+        return  deepcopy(self._flags) 
+
+
+    def flags_names(self,include_default=False) ->list:
+        """returns the name of the flags passed in argv\n
+        include_default: if False, the default flags will not
+        be included on list
+        """
+        flags = list(self._flags.keys())
+        return flags if include_default else flags[1::]
+
+
+    def total_flags(self,include_default=False) ->int:
+        """returns the total size of flags\n
+        include_default: if False, the default flags will not
+        be included on list"""
+        return len(self.flags_names(include_default))
+
+
+    def unused_flags(self)->dict:
+        """returns the flags that were not finded after 
+        all the flags_content were called
+        """
+        return  deepcopy(self._unused_flags) 
+
+
+    def unused_flags_names(self,include_default=False)->list:
+        """returns the flags names that were not finded after 
+        all the flags_content were called\n
+        include_default: if False, the default flags will not
+        be included on list"""
+        flags = list(self._unused_flags.keys())
+        return flags if include_default else flags[1::]
+
+
+    def total_unused_flags(self,include_default=False)->int:
+        """returns the total size of flags that were not finded after 
+        all the flags_content were called\n
+        include_default: if False, the default flags will not
+        be included on list"""
+        return len(self.unused_flags_names(include_default))
+
         
     def flags_content(self, *flags) -> FlagsContent:
         """returns a FlagsContent object, witch is a group of
@@ -76,6 +117,7 @@ class Args(ListArgs):
                 filtered_args += self._flags[flag]
                 # if pass till here, means this flag were inserted in
                 # the filtered args
+                self._unused_flags.pop(flag)
                 at_least_one_flag_exist = True
             except KeyError:
                 pass

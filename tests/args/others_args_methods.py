@@ -23,12 +23,14 @@ class TestFlagsNames(TestCase):
 
     def test_flags_name(self):
         args = Args(args=['a', 'b', '-a', 'a1', 'a2', '--c', 'c1', 'c2'])
-        self.assertEqual(args.flags_names(), ['default', 'a', 'c'])
+        self.assertEqual(args.flags_names(include_default=True), ['default', 'a', 'c'])
+        self.assertEqual(args.flags_names(include_default=False), [ 'a', 'c'])
+
 
 
 class TestLen(TestCase):
 
-    def test_flags_name(self):
+    def test_len(self):
         args = Args(args=['a', 'b', 'c'], consider_first=True)
         self.assertEqual(len(args), 3)
         args = Args(args=['a', 'b', 'c'])
@@ -53,14 +55,61 @@ class TestFlags(TestCase):
       
 
       
-class TestRepresentation(TestCase):
 
-    def test_representation(self):
+class TestTotal_flags(TestCase):
+
+    def test_total_flags(self):
+        args = Args(args=['a', 'b', 'c'])
+        self.assertEqual(args.total_flags(include_default=False), 0)
+
+        args = Args(args=['a', '-b', 'c'])
+        self.assertEqual(args.total_flags(), 1)
+        args = Args(args=['a', '-b', '-c'])
+        self.assertEqual(args.total_flags(), 2)
+
+        #test default inclusion
+        args = Args(args=['a', '-b', '-c'])
+        self.assertEqual(args.total_flags(include_default=True), 3)
+
+
+
+class TestUnusedFlags(TestCase):
+
+    def test_unused(self):
         args = Args(args=['a','a1', '-b', 'c','1'])
-        expected = dumps({
-            'default':['a1'],
-            'b':['c',1]
-        },indent=4)
+        b = args.flags_content('b')
+        expected = {
+            'default':['a1']
+        }
+        self.assertDictEqual(args.unused_flags(),expected)
+    
 
-        self.assertEqual(str(args),expected)
-      
+class TestUnusedFlagsNames(TestCase):
+
+    def test_unused_flags_names(self):
+        args = Args(args=['a','a1', '-b', '-c','1'])
+        self.assertListEqual(args.unused_flags_names(),['b','c'])
+        self.assertListEqual(args.unused_flags_names(
+            include_default=True),
+            ['default','b','c']
+        )
+
+        b = args.flags_content('b')
+        self.assertListEqual(args.unused_flags_names(),['c'])
+        self.assertListEqual(
+            args.unused_flags_names(include_default=True),
+        ['default','c']
+        )
+
+
+
+class TestTotalUnusedFlags(TestCase):
+
+    def test_unused_flags_names(self):
+        args = Args(args=['a','a1', '-b', '-c','1'])
+        self.assertEqual(args.total_flags(),2)
+        self.assertEqual(args.total_flags(include_default=True),3)
+        b = args.flags_content('b')
+        self.assertEqual(args.total_unused_flags(),1)   
+        self.assertEqual(args.total_unused_flags(include_default=True),2)   
+    
