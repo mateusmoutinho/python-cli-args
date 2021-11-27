@@ -57,4 +57,7 @@ if div.exist:
    result = execute_calc(div,'/')
 
 
-unused = args.unused_flags_names()
+if result is not None:
+   print(result)
+else:
+   print(f'invalid flag: {args.unused_flags_names()[0]}')
