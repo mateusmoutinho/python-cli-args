@@ -1,5 +1,5 @@
 from typing import Union
-from cli_args.extras import get_num_comparison
+from cli_args_system.extras import get_num_comparison
 
 
 # abstract class

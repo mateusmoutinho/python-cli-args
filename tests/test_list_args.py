@@ -1,5 +1,5 @@
 from unittest import TestCase
-from cli_args.list_args import ListArgs
+from cli_args_system.list_args import ListArgs
 
 
 class TestListArgs(TestCase):

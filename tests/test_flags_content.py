@@ -1,5 +1,5 @@
 from unittest import TestCase
-from cli_args.flags_content import FlagsContent
+from cli_args_system.flags_content import FlagsContent
 
 
 class TestFlagsContent(TestCase):

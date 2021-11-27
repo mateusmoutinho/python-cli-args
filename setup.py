@@ -1,10 +1,10 @@
 from distutils.core import setup
 setup(
-  name = 'cli_args',        
-  packages = ['cli_args'],
-  version = '0.1',    
+  name = 'cli-args-system',        
+  packages = ['cli_args_system'],
+  version = '0.2',    
   license='MIT',     
-  description = 'A Cli args libary  to control argv flags and content',   
+  description = 'A Cli flags libary  to control argv flags and content',   
   author = 'Mateus Moutinho Queiroz',               
   author_email = 'mateusmoutinho01@gmail.com',      
   url = 'https://github.com/mateusmoutinho/python-cli-args.git',  
