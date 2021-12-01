@@ -10,20 +10,31 @@ class FlagsContent(ListArgs):
 
         super().__init__()
         # set the exist and filled to false
-        self.exist = False
-        self.filled = False
+        self._exist = False
+        self._filled = False
         # if content is not None, means the flag exist
         if content is not None:
-            self.exist = True
+            self._exist = True
             # if content is not [], means its filled
             if content:
-                self.filled = True
+                self._filled = True
                 # set the args to content, for to be
             # used with the super(ListArgs)
             self._args = content
-
+    
+    def exist(self):
+        """returns True if flag were passed on argv exist, else False"""
+        return self._exist
+    
+    def filled(self):
+        """returns True if flag is filled, else False
+        ex: 
+        $ ./aplication.py -o a.txt b.tx -> True 
+        $ ./aplication.py -o -> False
+        """
+    
     def __repr__(self) -> str:
-        return f'exist:  {self.exist}\n'\
-               f'filled: {self.filled}\n'\
+        return f'exist:  {self._exist}\n'\
+               f'filled: {self._filled}\n'\
                f'args:   {self._args}' 
                 
