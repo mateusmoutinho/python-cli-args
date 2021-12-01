@@ -18,5 +18,10 @@ A python Cli library
 
 ##### The most Basic Aplication
 ~~~python
-Esta é uma linha de código em HTML.
+from cli_args_system import Args,FlagsContent
+
+
+args = Args()
+
+print(args)
 ~~~
