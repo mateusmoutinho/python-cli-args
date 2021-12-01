@@ -1,6 +1,5 @@
 from unittest.loader import findTestCases
-from cli_args_system import Args
-from cli_args_system import flags_content
+from cli_args_system import Args, FlagsContent
 from urllib.request import urlopen
 from urllib.error import URLError
 from bs4 import BeautifulSoup
@@ -36,25 +35,34 @@ def get_html(args:Args)->str:
             exit_with_mensage(mensage='not a valid html')
 
 
-def find_in_html(html:str,args:Args)->str:
-    soup = BeautifulSoup(html)
-    
+def find_in_html(html:str,find:FlagsContent, args:Args)->str:
+
     find_dict = {}
+    if not find.filled():
+        exit_with_mensage(mensage='no tag')
+
     id = args.flags_content('id')
-    if id.only_exist():
+    if id.exist_and_empty():
         exit_with_mensage(mensage='empty id')
-    if id.exist:
+    if id.exist():
         find_dict['id'] = id[0]
     
     class_name = args.flags_content('class','classname')
-    if class_name.only_exist():
+    if class_name.exist_and_empty():
        exit_with_mensage(mensage='empty class')
-           
+    if class_name.exist():
+        find_dict['class'] = class_name[0]
+    
+    
+    return  BeautifulSoup(html,'lxml').find_all(find[0],find_dict)
 
 args = Args()
 
 html = get_html(args)
 
-find = args.flags_content('find','f')
+find = args.flags_content('filter','f')
 if find.exist():
-    text = find_in_html(html,args)
+    text = find_in_html(html,find,args)
+    print(text)
+
+only_content  = args.flags_content('onlycontent','only')
