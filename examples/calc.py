@@ -42,7 +42,7 @@ if __name__ == '__main__':
    
    #for help flag
    help = args.flags_content('h','help')
-   if help.exist:
+   if help.exist():
       print(HELP);exit(0)
 
 
@@ -57,22 +57,22 @@ if __name__ == '__main__':
    #get the flagsContent of add flags and its sinoniumous
    add = args.flags_content('add','a')
    #verify if add flag  or its synonimous is present 
-   if add.exist:
+   if add.exist():
       print(execute_calc(add,'+'))
 
    #make the same for the others 
    sub = args.flags_content('sub','pop','remove','s')
-   if sub.exist:
+   if sub.exist():
       print(execute_calc(sub,'-'))
 
 
    multi = args.flags_content('multi','mult','m','*')
-   if multi.exist:
+   if multi.exist():
       print(execute_calc(multi,'*'))
 
 
    div = args.flags_content('div','d','/')
-   if div.exist:
+   if div.exist():
       print(execute_calc(div,'/'))
 
 

@@ -22,16 +22,25 @@ class FlagsContent(ListArgs):
             # used with the super(ListArgs)
             self._args = content
     
-    def exist(self):
-        """returns True if flag were passed on argv exist, else False"""
+
+    def flags(self)->list:
+        """returns The founded flags"""
+        return self._args
+
+
+    def exist(self)->bool:
+        """returns True if flag were passed on argv else False"""
         return self._exist
     
-    def filled(self):
-        """returns True if flag is filled, else False
-        ex: 
-        $ ./aplication.py -o a.txt b.tx -> True 
-        $ ./aplication.py -o -> False
-        """
+    def exist_and_empty(self)->bool:
+        """returns True if exist and is not filled"""
+        return True if self._exist and not self._filled else False 
+
+    def filled(self)->bool:
+        """returns True if flag is filled else False, ex: \n
+        flags = [a.txt, b.txt ]-> True \n
+        flags = [] -> False""" 
+        return self._filled
     
     def __repr__(self) -> str:
         return f'exist:  {self._exist}\n'\
