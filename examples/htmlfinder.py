@@ -56,6 +56,7 @@ def find_in_html(html:str,find:FlagsContent, args:Args)->str:
     
     return  BeautifulSoup(html,'lxml').find_all(find[0],find_dict)
 
+
 args = Args()
 
 html = get_html(args)

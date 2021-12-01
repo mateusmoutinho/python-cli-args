@@ -66,6 +66,7 @@ def get_out_wraper(args:Args,destroy_if_dont_find=True)->TextIOWrapper or None:
         if destroy_if_dont_find:
             exit_with_mensage(mensage='not out file')
 
+
 def write_text_in_out_file_or_same_file(text:str,args:Args):
     """write text in out flag if exist,
     otherwhise write on same file args(0)\n
@@ -81,7 +82,6 @@ def write_text_in_out_file_or_same_file(text:str,args:Args):
         #otherwise write in the out file
         out.write(text)
       
-
 
 def join_files(join:FlagsContent,args:Args):
     """join the files of join flag, in the out flag content
