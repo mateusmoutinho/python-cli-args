@@ -28,6 +28,7 @@ class TestFlagsNames(TestCase):
 
 
 
+
 class TestLen(TestCase):
 
     def test_len(self):
@@ -82,7 +83,24 @@ class TestUnusedFlags(TestCase):
             'default':['a1']
         }
         self.assertDictEqual(args.unused_flags(),expected)
-    
+
+class TestFlagContent(TestCase):
+
+    def test_finded(self):
+        args = Args(args=['a','a1', '-b', 'value of b'])
+        b = args.flag_content('b')
+        self.assertEqual(b, 'value of b')
+
+    def test_finded_number(self):
+        args = Args(args=['a','a1', '-b', 10])
+        b = args.flag_content('b')
+        self.assertEqual(b, 10)
+
+    def test_none(self):
+        args = Args(args=['a','a1', '-b', 10])
+        b = args.flag_content('c')
+        self.assertIsNone(b,None)
+
 
 class TestUnusedFlagsNames(TestCase):
 

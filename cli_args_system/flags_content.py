@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Union
 from cli_args_system.list_args import ListArgs
 
@@ -21,11 +22,11 @@ class FlagsContent(ListArgs):
                 # set the args to content, for to be
             # used with the super(ListArgs)
             self._args = content
-    
+
 
     def flags(self)->list:
         """returns The founded flags"""
-        return self._args
+        return deepcopy(self._args) 
 
 
     def exist(self)->bool:

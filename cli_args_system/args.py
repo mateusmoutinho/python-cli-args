@@ -1,7 +1,7 @@
 from sys import argv
 from copy import deepcopy
 from json import dumps
-from typing import Any
+from typing import Any, Union
 
 from cli_args_system.extras import format_args, get_flags, cast_list
 from cli_args_system.flags_content import FlagsContent
@@ -47,7 +47,7 @@ class Args(ListArgs):
         formatted according to the initial arguments of the class"""
         return deepcopy(self._args)
 
-
+    
     def flags(self)->dict:
         """returns a dictionary of flags captured in argv"""
         return  deepcopy(self._flags) 
@@ -92,7 +92,23 @@ class Args(ListArgs):
         be included on list"""
         return len(self.unused_flags_names(include_default))
 
-        
+    def flag_content(self, *flags)->Union[str,int,None]:
+        """return the first founded flag it can be str or int \n
+        if does not find any flag, it will return None\n
+        flags: the flag that you want to find
+        """
+        # generate a patronized list of flags
+        flags_list = cast_list(*flags)
+
+        for flag in flags_list:
+            if flag.__class__ != str:
+                raise TypeError('only str are valid for flags')
+            try:
+                return self._flags[flag][0]
+            except (KeyError,IndexError): pass 
+        return None 
+
+
     def flags_content(self, *flags) -> FlagsContent:
         """returns a FlagsContent object, witch is a group of
         the found flags in argv\n
@@ -132,30 +148,13 @@ class Args(ListArgs):
 
     def __eq__(self, o: Any) -> bool:
         """this methods is called when == is used"""
-
-        # means that is a empty comparison
-        # so it will return True if self._args is empty
-        if o == {} or o == []:
-            return True if self._args == [] else False
-
-        comparison_type = o.__class__
-
-        # if comparison type its a int, it will compare with args size
-        if comparison_type == int:
-            return o == len(self._args)
-
-        # if is a tuple, it will cast the comparison
-        # and compare with args
-        if comparison_type == tuple:
-            return list(o) == self._args
-
-        # same with list, but don't cast it
-        if comparison_type == list:
-            return o == self._args
-
-        # if is a dict, it will compare with the self._flags
-        if comparison_type == dict:
+        #if is a dict compare with flags
+        if isinstance(o,dict):
             return o == self._flags
+        else:
+            return super().__eq__(o)
+
+        
 
         return False
 

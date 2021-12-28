@@ -138,6 +138,8 @@ def remove_text(remove:FlagsContent,args:Args):
 
     write_text_in_out_file_or_same_file(text=text_file,args=args)
 
+
+
 if __name__ == '__main__':
     #construct the args
     args = Args(convert_numbers=False)
