@@ -1,6 +1,6 @@
 
  
-In this folder you will see 3 programs containing examples of how the library works:
+In this folder you will see 2 programs containing examples of how the library works:
 
 #### calc.py
 >basic calculator based on flags system
