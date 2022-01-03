@@ -61,7 +61,20 @@ list_of_args = args.args()
 print(list_of_args)
 ~~~~
 
+###### ascessing args index:
+#
+~~~~python
+from cli_args_system import Args
 
+args = Args()
+
+try:
+    print(f'second arg is {args[1]}')
+except IndexError:
+    print('there less than 2 args')
+
+
+~~~~
 ###### making iterations:
 #
 ~~~~python
@@ -72,6 +85,8 @@ args = Args()
 for a in args:
     print(a)
 ~~~~
+
+
 ##### Flags:
 
 ###### retriving all flags dict:
@@ -84,5 +99,10 @@ args = Args()
 flags = args.flags()
 print(flags)
 ~~~
-
+###### runing:
+#
+~~~ shell
+ python3 test.py 0 0x   -a 10, 1a, -b 20 1b 
+ -> {'default': [0, '0x'], 'a': ['10,', '1a,'], 'b': [20, '1b']}
+~~~
 
