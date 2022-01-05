@@ -1,26 +1,15 @@
-## Install
+
 #### Install from pip
-###### linux
-#
+
 ~~~ shel 
-$ pip3 install cli-args-system
+linux: pip3 install cli-args-system
+windows:pip install cli-args-system
 ~~~
-###### windows
-# 
-~~~ shel 
-$ pip install cli-args-system
-~~~
-#
 #### Install from scratch
-###### linux
 #
 ~~~ shel 
-$ sudo python3 setup.py install
-~~~
-###### windows
-# 
-~~~ shel 
-$ python setup.py install
+linux: sudo python3 setup.py install
+windows: python setup.py install
 ~~~
 #
 #
