@@ -1,6 +1,5 @@
-
+## Install
 #### Install from pip
-#
 ###### linux
 #
 ~~~ shel 
@@ -12,10 +11,7 @@ $ pip3 install cli-args-system
 $ pip install cli-args-system
 ~~~
 #
-#
-
 #### Install from scratch
-
 ###### linux
 #
 ~~~ shel 
