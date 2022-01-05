@@ -1,2 +1,2 @@
 python3 -m build
-twine upload -u USER -p  PASSWORD  dist/*
+twine upload -u USER -p  PASSWORD   --skip-existing dist/*
