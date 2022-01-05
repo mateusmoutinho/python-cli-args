@@ -3,7 +3,7 @@
 
 ~~~ shel 
 linux: pip3 install cli-args-system
-windows:pip install cli-args-system
+windows: pip install cli-args-system
 ~~~
 #### Install from scratch
 #
