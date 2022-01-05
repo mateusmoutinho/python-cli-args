@@ -8,7 +8,7 @@ setup(
   long_description = long_description,
   long_description_content_type='text/markdown',
   packages = ['cli_args_system'],
-  version = '1.02',    
+  version = '1.03',    
   license='MIT',     
 
 
