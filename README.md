@@ -15,7 +15,7 @@ $ python setup.py install
 
 
 #### What is cli_args_system ?
-in an general way its a library to manipulate argv args its content and its flags 
+In an general way its a library to manipulate argv args its content and its flags 
 #
 #
 
