@@ -61,7 +61,7 @@ $ python3  test.py  -a "value of a" -b "value of b"
 #
 #
 
-##### Args:
+### Args:
 ###### retrieving the args: 
 #
 ~~~~python
@@ -99,7 +99,7 @@ for a in args:
 ~~~~
 
 
-##### Flags:
+### Flags:
 
 ###### retrieving all flags dict:
 #
