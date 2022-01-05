@@ -21,7 +21,7 @@ in an general way its a library to manipulate argv args its content and its flag
 
 
 #### Basic Usage 
-###### the most basic aplication:
+###### the most basic application:
 #
 ~~~~ python
 from cli_args_system import Args
@@ -50,7 +50,7 @@ $ python3  test.py  -a "value of a" -b "value of b"
 #
 
 ##### Args:
-###### retriving the args: 
+###### retrieving the args: 
 #
 ~~~~python
 from cli_args_system import Args
@@ -61,7 +61,7 @@ list_of_args = args.args()
 print(list_of_args)
 ~~~~
 
-###### ascessing args index:
+###### accessing args index:
 #
 ~~~~python
 from cli_args_system import Args
@@ -89,7 +89,7 @@ for a in args:
 
 ##### Flags:
 
-###### retriving all flags dict:
+###### retrieving all flags dict:
 #
 ~~~ python
 from cli_args_system import Args
@@ -99,7 +99,7 @@ args = Args()
 flags = args.flags_dict()
 print(flags)
 ~~~
-###### runing:
+###### running:
 #
 ~~~ shell
  python3 test.py 0 0x   -a 10 1a -b 20 1b 
@@ -114,7 +114,7 @@ args = Args()
 out = args.flags_content('o','out')
 print(out)
 ~~~
-###### runing:
+###### running:
 #
 ~~~ shell
 python3 test.py -o a.txt
@@ -124,7 +124,7 @@ filled: True
 args:   ['a.txt']
 ~~~
 
-###### retriving args and making iterations:
+###### retrieving  flags and making iterations:
 #
 ~~~ python
 from cli_args_system import Args
@@ -145,7 +145,7 @@ for f in out:
 
 print(f'full list is: {full_list}')
 ~~~
-###### runing:
+###### running:
 #
 ~~~ shell
 python3 test.py -o a.txt b.txt
@@ -175,7 +175,7 @@ if out.filled():
 if 'a.txt' in out:
     print('a.txt in out flag')
 ~~~
-###### runing:
+###### running:
 #
 ~~~ shell
 python3 test.py -o a.txt
