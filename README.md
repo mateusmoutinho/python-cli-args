@@ -96,13 +96,92 @@ from cli_args_system import Args
 
 args = Args()
 
-flags = args.flags()
+flags = args.flags_dict()
 print(flags)
 ~~~
 ###### runing:
 #
 ~~~ shell
- python3 test.py 0 0x   -a 10, 1a, -b 20 1b 
- -> {'default': [0, '0x'], 'a': ['10,', '1a,'], 'b': [20, '1b']}
+ python3 test.py 0 0x   -a 10 1a -b 20 1b 
+ -> {'default': [0, '0x'], 'a': ['10', '1a'], 'b': [20, '1b']}
+~~~
+###### getting FlagsContent Object:
+#
+~~~ python
+from cli_args_system import Args
+
+args = Args()
+out = args.flags_content('o','out')
+print(out)
+~~~
+###### runing:
+#
+~~~ shell
+python3 test.py -o a.txt
+ -> 
+exist:  True
+filled: True
+args:   ['a.txt']
+~~~
+
+###### retriving args and making iterations:
+#
+~~~ python
+from cli_args_system import Args
+
+args = Args()
+out = args.flags_content('o','out')
+
+full_list = out.flags()
+
+try:
+    first_element = out[0]
+    print(f'first element is: {first_element}')
+except IndexError:pass 
+
+#making iterations
+for f in out:
+    print(f)
+
+print(f'full list is: {full_list}')
+~~~
+###### runing:
+#
+~~~ shell
+python3 test.py -o a.txt b.txt
+ -> 
+first element is: a.txt
+a.txt
+b.txt
+full list is: ['a.txt', 'b.txt']
+~~~
+###### checking Flags Status:
+#
+~~~ python
+from cli_args_system import Args
+
+args = Args()
+out = args.flags_content('o','out')
+
+if out.exist():
+    print('out flag exist')
+
+if out.exist_and_empty():
+    print('out flag exist but its empty')
+
+if out.filled():
+    print('out flag its filled')
+
+if 'a.txt' in out:
+    print('a.txt in out flag')
+~~~
+###### runing:
+#
+~~~ shell
+python3 test.py -o a.txt
+->
+out flag exist
+out flag its filled
+a.txt in out flag
 ~~~
 

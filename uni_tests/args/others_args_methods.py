@@ -52,7 +52,7 @@ class TestFlags(TestCase):
             'default':['a1'],
             'b':['c',1]
         }
-        self.assertDictEqual(args.flags(),expected)
+        self.assertDictEqual(args.flags_dict(),expected)
       
 
       
@@ -88,17 +88,17 @@ class TestFlagContent(TestCase):
 
     def test_finded(self):
         args = Args(args=['a','a1', '-b', 'value of b'])
-        b = args.flag_content('b')
+        b = args.flag_str('b')
         self.assertEqual(b, 'value of b')
 
     def test_finded_number(self):
         args = Args(args=['a','a1', '-b', 10])
-        b = args.flag_content('b')
+        b = args.flag_str('b')
         self.assertEqual(b, 10)
 
     def test_none(self):
         args = Args(args=['a','a1', '-b', 10])
-        b = args.flag_content('c')
+        b = args.flag_str('c')
         self.assertIsNone(b,None)
 
 

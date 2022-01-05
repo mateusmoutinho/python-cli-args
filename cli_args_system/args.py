@@ -48,7 +48,7 @@ class Args(ListArgs):
         return deepcopy(self._args)
 
     
-    def flags(self)->dict:
+    def flags_dict(self)->dict:
         """returns a dictionary of flags captured in argv"""
         return  deepcopy(self._flags) 
 
@@ -70,14 +70,14 @@ class Args(ListArgs):
 
 
     def unused_flags(self)->dict:
-        """returns the flags that were not finded after 
+        """returns the flags that were not used after 
         all the flags_content were called
         """
         return  deepcopy(self._unused_flags) 
 
 
     def unused_flags_names(self,include_default=False)->list:
-        """returns the flags names that were not finded after 
+        """returns the flags names that were not used after 
         all the flags_content were called\n
         include_default: if False, the default flags will not
         be included on list"""
@@ -86,16 +86,16 @@ class Args(ListArgs):
 
 
     def total_unused_flags(self,include_default=False)->int:
-        """returns the total size of flags that were not finded after 
+        """returns the total size of flags that were not used after 
         all the flags_content were called\n
         include_default: if False, the default flags will not
         be included on list"""
         return len(self.unused_flags_names(include_default))
 
-    def flag_content(self, *flags)->Union[str,int,None]:
+    def flag_str(self, *flags)->Union[str,int,None]:
         """return the first founded flag it can be str or int \n
         if does not find any flag, it will return None\n
-        flags: the flag that you want to find
+        flags: the flags that you want to find
         """
         # generate a patronized list of flags
         flags_list = cast_list(*flags)
