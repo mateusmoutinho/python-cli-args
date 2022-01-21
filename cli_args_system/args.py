@@ -1,9 +1,9 @@
-from sys import argv
+from sys import argv,exit
 from copy import deepcopy
 from json import dumps
 from typing import Any, Union
 
-from cli_args_system.extras import format_args, get_flags, cast_list
+from cli_args_system.extras import create_requiered_flag_mensage, format_args, get_flags, cast_list
 from cli_args_system.flags_content import FlagsContent
 from cli_args_system.list_args import ListArgs
 
@@ -108,6 +108,21 @@ class Args(ListArgs):
                 return self._flags[flag][0]
             except (KeyError,IndexError): pass 
         return None 
+    
+    def required_flag_str(self,flags:Union[tuple,list,str],required_mensage:str=None)->Union[str,int]:
+        """returns the first founded flag it can be str or int \n
+        if does not find any flag, will show the 'required mensage' and kill the aplication \n
+        flags: the flags that you want to find \n
+        required_mensage: the mensage to show if the flag were not finded, if is None will show 
+        the default mensage formated with the flags
+        """ 
+        flag_str = self.flag_str(*flags)
+    
+        if flag_str is None:
+            required_mensage = create_requiered_flag_mensage(flags,required_mensage)
+            print(required_mensage)
+            exit(1)
+        return flag_str
 
 
     def flags_content(self, *flags) -> FlagsContent:
@@ -146,6 +161,22 @@ class Args(ListArgs):
         else:
             # otherwise returns FlagsContent , with None as content
             return FlagsContent(content=None)
+
+    def required_flags_content(self,flags:Union[tuple,list,str],required_mensage:str=None)->FlagsContent:
+        """returns a FlagsContent object, witch is a group of
+        the found flags in argv, if any flags were not finded, it will show the
+        'required mensage' and kill the aplication\n
+        flags: the flags that you want to find,
+        required_mensage: the mensage to show  if any flags were not finded, 
+        if is None will show  the default mensage formated with the flags
+        you can pass a list, tuple, or str""" 
+        
+        flags_content = self.flags_content(*flags)
+        if not flags_content.exist():
+            required_mensage = create_requiered_flag_mensage(flags,required_mensage)
+            print(required_mensage)
+            exit(1)
+        return flags_content
 
     def __eq__(self, o: Any) -> bool:
         """this methods is called when == is used"""

@@ -154,6 +154,23 @@ def cast_list(*elements) -> list:
         # if its a larger element, just cast with list
         return list(elements)
 
+def create_requiered_flag_mensage(flags:Union[tuple,str,list],required_mensage:Union[str,None])->str:
+    """creates a required flags mensage if flags is None, otherwise return 
+    requiered mensage it self
+    flags: the flags passed
+    requiered mensage: the mensage to show after kill the aplication
+    """
+    #if required flags exist it return it self
+    if required_mensage:
+        return required_mensage
+    else:
+        if flags.__class__  == str:
+            flag = flags
+        else:
+            flag = flags[0]
+        
+        return  f'the flag: {flag} are requiered'
+    
 
 def get_num_comparison(o: Union[int, list, tuple]) -> Union[int, None]:
     object_type = o.__class__
