@@ -101,6 +101,36 @@ class TestUnusedFlags(TestCase):
         self.assertDictEqual(args.unused_flags(),expected)
 
 
+class TestRequiredFlagsStr(TestCase):
+
+    def test_required_exist(self):
+        args =   args = Args(args=['a','a1', '-b', 'value of b'])
+        b = args.required_flag_str('b')
+        self.assertEqual(b,'value of b')
+
+
+    def test_required_not_exist(self):
+        args =   args = Args(args=['a','a1'])
+
+        try:
+            args.required_flag_str('b')
+            #if dont raises means failured
+            raise self.fail()
+        except SystemExit as se:
+            self.assertEqual(se.args[0],'the flag: b are requiered')
+
+
+    def test_required_not_exist_with_formated_menssage(self):
+        args =   args = Args(args=['a','a1'])
+
+        try:
+            args.required_flag_str('b',required_mensage='test mensage')
+            #if dont raises means failured
+            raise self.fail()
+        except SystemExit as se:
+            self.assertEqual(se.args[0],'test mensage')
+
+
 
 class TestFlagContent(TestCase):
 

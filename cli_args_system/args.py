@@ -1,4 +1,4 @@
-from sys import argv,exit
+from sys import argv
 from copy import deepcopy
 from json import dumps
 from typing import Any, Union
@@ -120,8 +120,7 @@ class Args(ListArgs):
     
         if flag_str is None:
             required_mensage = create_requiered_flag_mensage(flags,required_mensage)
-            print(required_mensage)
-            exit(1)
+            raise SystemExit(required_mensage)
         return flag_str
 
 
@@ -174,8 +173,7 @@ class Args(ListArgs):
         flags_content = self.flags_content(*flags)
         if not flags_content.exist():
             required_mensage = create_requiered_flag_mensage(flags,required_mensage)
-            print(required_mensage)
-            exit(1)
+            raise SystemExit(required_mensage)
         return flags_content
 
     def __eq__(self, o: Any) -> bool:
@@ -186,9 +184,7 @@ class Args(ListArgs):
         else:
             return super().__eq__(o)
 
-        
-
-        return False
+    
 
     def __repr__(self) -> str:
         """returns a json representation of the flags attribute"""
