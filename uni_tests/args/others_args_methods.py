@@ -84,6 +84,24 @@ class TestUnusedFlags(TestCase):
         }
         self.assertDictEqual(args.unused_flags(),expected)
 
+    def test_unused_with_flag_str(self):
+        args = Args(args=['a','a1', '-b', 'c','1'])
+        b = args.flag_str("b")
+        expected = {
+            'default':['a1']
+        }
+        self.assertDictEqual(args.unused_flags(),expected)
+
+    def test_unused_with_nothing(self):
+        args = Args(args=['a','a1', '-b', 'c','1'])
+        expected = {
+            'default':['a1'],
+            'b':['c',1]
+        }
+        self.assertDictEqual(args.unused_flags(),expected)
+
+
+
 class TestFlagContent(TestCase):
 
     def test_finded(self):

@@ -104,6 +104,7 @@ class Args(ListArgs):
             if flag.__class__ != str:
                 raise TypeError('only str are valid for flags')
             try:
+                self._unused_flags.pop(flag)
                 return self._flags[flag][0]
             except (KeyError,IndexError): pass 
         return None 
